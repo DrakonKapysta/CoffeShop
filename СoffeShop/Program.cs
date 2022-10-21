@@ -1,10 +1,16 @@
 using CoffeShopServices.Emailer;
+using ÑoffeShop;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 
@@ -24,4 +30,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Use(async (HttpContext context, RequestDelegate next) =>
+{
+    var contextAccessor = context.RequestServices.GetService<IHttpContextAccessor>();
+    app.Logger.LogInformation($"Ip: {contextAccessor?.HttpContext?.Connection.RemoteIpAddress} Path: {context.Request.Host}{context.Request.Path}{context.Request.QueryString} Time:{DateTime.Now.ToLongTimeString()}");
+    await next(context);
+});
 app.Run();
