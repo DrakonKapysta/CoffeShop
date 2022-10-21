@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using СoffeShop.Models;
 
+
 namespace СoffeShop.Controllers
 {
     public class HomeController : Controller
@@ -68,7 +69,46 @@ namespace СoffeShop.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [HttpPost]
+        [Route("FileUpload")]
+        public async Task<IActionResult> FileUpload(IFormFile file)
+        {
+            await UploadFile(file);
+            TempData["msg"] = "File uploaded successfully";
+            return View("FileUploadPage");
+        }
+        [Route("FileUpload")]
+        public IActionResult FileUpload()
+        {
+            return View("FileUploadPage");
+        }
+        public async Task<bool> UploadFile(IFormFile file)
+        {
+            string path = "";
+            bool iscopied = false;
+            try
+            {
+                if (file.Length>0)
+                {
+                    string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files"));
+                    using (var filestream = new FileStream(Path.Combine(path,filename), FileMode.Create))
+                    {
+                        await file.CopyToAsync(filestream);
+                    }
+                    iscopied = true;
+                }
+                else
+                {
+                    iscopied = false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return iscopied;
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
