@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
+builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs/logger.txt"));
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
