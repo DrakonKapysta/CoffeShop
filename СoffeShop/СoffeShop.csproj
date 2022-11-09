@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="Resources\Views\Home\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 

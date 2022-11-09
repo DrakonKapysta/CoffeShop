@@ -1,4 +1,6 @@
 ﻿@model EmailModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,20 +40,23 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto p-4">
-                    <a href="home" class="nav-item nav-link">Home</a>
-                    <a href="about" class="nav-item nav-link" >About</a>
-                    <a href="service" class="nav-item nav-link">Service</a>
-                    <a href="menu" class="nav-item nav-link">Menu</a>
+                    <a href="home" class="nav-item nav-link">@Localizer["Home"]</a>
+                    <a href="about" class="nav-item nav-link" >@Localizer["About"]</a>
+                    <a href="service" class="nav-item nav-link">@Localizer["Service"]</a>
+                    <a href="menu" class="nav-item nav-link">@Localizer["Menu"]</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@Localizer["Pages"]</a>
                         <div class="dropdown-menu text-capitalize">
-                            <a href="reservation" class="dropdown-item">Reservation</a>
-                            <a href="testimonial" class="dropdown-item">Testimonial</a>
-                            <a href="FileUpload" class="dropdown-item">Upload</a>
+                            <a href="reservation" class="dropdown-item">@Localizer["Reservation"]</a>
+                            <a href="testimonial" class="dropdown-item">@Localizer["Testimonial"]</a>
+                            <a href="FileUpload" class="dropdown-item">@Localizer["Upload"]</a>
                         </div>
                     </div>
-                    <a href="contact" class="nav-item nav-link">Contact</a>
+                    <a href="contact" class="nav-item nav-link">@Localizer["Contact"]</a>
                 </div>
+            </div>
+            <div>
+                @await Html.PartialAsync("_SelectLanguagePartial")
             </div>
         </nav>
     </div>

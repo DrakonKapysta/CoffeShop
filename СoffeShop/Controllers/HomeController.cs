@@ -3,6 +3,7 @@ using CoffeShopServices.Emailer.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using СoffeShop.Models;
+using Microsoft.AspNetCore.Localization;
 
 
 namespace СoffeShop.Controllers
@@ -108,6 +109,17 @@ namespace СoffeShop.Controllers
                 throw;
             }
             return iscopied;
+        }
+        [HttpPost]
+        [Route("SetLanguage")]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName, CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential=true });
+
+            return LocalRedirect(returnUrl);
+
+
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

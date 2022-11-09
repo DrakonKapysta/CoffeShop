@@ -1,17 +1,35 @@
 using CoffeShopServices.Emailer;
 using СoffeShop;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddDataAnnotationsLocalization().AddViewLocalization();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Logging.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "Logs/logger.txt"));
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+      new CultureInfo("en"),
+      new CultureInfo("uk")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 
 var app = builder.Build();
 
@@ -28,14 +46,17 @@ app.UseDirectoryBrowser(new DirectoryBrowserOptions()
 
     RequestPath = new PathString("/pages")
 });
+var LocOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+
+app.UseRequestLocalization(LocOptions.Value);
 app.UseStaticFiles();
+
 app.UseStaticFiles(new StaticFileOptions() // обрабатывает запросы к каталогу wwwroot/html
 {
     FileProvider = new PhysicalFileProvider(
             Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Files")),
     RequestPath = new PathString("/pages")
 });
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
