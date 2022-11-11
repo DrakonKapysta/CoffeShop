@@ -8,6 +8,7 @@ namespace СoffeShop.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = new NavbarViewModel();
+
             return View(model);
         }
     }
