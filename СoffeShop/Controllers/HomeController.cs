@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using СoffeShop.Models;
 using Microsoft.AspNetCore.Localization;
+using FluentValidation.Results;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace СoffeShop.Controllers
@@ -12,11 +16,13 @@ namespace СoffeShop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IValidator<Person> _validator;
 
-        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IEmailSender emailSender, IValidator<Person> validator)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _validator = validator;
         }
         [Route("Home")]
         [Route("/")]
@@ -110,6 +116,12 @@ namespace СoffeShop.Controllers
             }
             return iscopied;
         }
+        [HttpGet]
+        [Route("Profile")]
+        public IActionResult Profile()
+        {
+            return View();
+        }
         [HttpPost]
         [Route("SetLanguage")]
         public IActionResult SetLanguage(string culture, string returnUrl)
@@ -118,6 +130,28 @@ namespace СoffeShop.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential=true });
 
             return LocalRedirect(returnUrl);
+        }
+        [HttpGet]
+        [Route("CreateProfile")]
+        public IActionResult CreateProfile()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Route("CreateProfile")]
+        public async Task<IActionResult> CreateProfile(Person person)
+        {
+            ValidationResult result = await _validator.ValidateAsync(person);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+
+                return View();
+            }
+
+            TempData["notice"] = "Person successfully created!";
+
+            return RedirectToAction("Profile");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

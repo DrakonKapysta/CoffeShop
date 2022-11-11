@@ -4,11 +4,16 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.Extensions.Options;
+using FluentValidation;
+using ÑoffeShop.Models;
+using ÑoffeShop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddDataAnnotationsLocalization().AddViewLocalization();
+
+builder.Services.AddScoped<IValidator<Person>, PersonValidator>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
@@ -30,6 +35,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
+
 
 var app = builder.Build();
 

@@ -1,0 +1,64 @@
+﻿@model СoffeShop.Models.Person
+@{
+    ViewData["title"] = "CreateProfile";
+}
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5 position-relative overlay-bottom">
+    <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
+        <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Menu</h1>
+        <div class="d-inline-flex mb-lg-5">
+            <p class="m-0 text-white"><a class="text-white" href="">Home</a></p>
+            <p class="m-0 text-white px-2">/</p>
+            <p class="m-0 text-white">CreateProfile</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<div asp-validation-summary="ModelOnly"></div>
+
+<form asp-action="CreateProfile" asp-controller="Home">
+
+    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center">
+        <div>
+            <h2>Створення профіля</h2>
+
+            <input id="id" asp-for="Id" type="number" hidden />
+            <p>
+                Name: <input asp-for="Name" /> <span asp-validation-for="Name"></span>
+            </p>
+            <p>
+                Surname: <input asp-for="Surname" /> <span asp-validation-for="Surname"></span>
+               
+            </p>
+            <p>
+                 Height: <input asp-for="Height" type="number" /> <span asp-validation-for="Height"></span>
+                
+            </p>
+            <p>
+                Kg: <input asp-for="Kg" type="number" /> <span asp-validation-for="Kg"></span>
+            </p>
+            <p>
+                 Sex: <input asp-for="Sex" type="text" /> <span asp-validation-for="Sex"></span>
+            </p>
+            <p>
+                 Email: <input asp-for="Email" type="email" /> <span asp-validation-for="Email"></span>
+            </p>
+            <p>
+                 Age: <input asp-for="Age" type="number" /> <span asp-validation-for="Age"></span>
+            </p>
+            <p>
+                 FamilyStatus: <input asp-for="FamilyStatus" type="text" /> <span asp-validation-for="FamilyStatus"></span>
+                 
+            </p>
+            <p>
+                 Salary: <input asp-for="Salary" type="number" /> <span asp-validation-for="Salary"></span>
+            </p>
+             <p>
+                <input id="sendInfo" type="submit" value="Create" />
+            </p>
+        </div>
+    </div>
+</form>
+<script>
+    document.getElementById("id").value = 1;
+</script>
