@@ -46,9 +46,10 @@ app.UseDirectoryBrowser(new DirectoryBrowserOptions()
 
     RequestPath = new PathString("/pages")
 });
-var LocOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 
+var LocOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(LocOptions.Value);
+
 app.UseStaticFiles();
 
 app.UseStaticFiles(new StaticFileOptions() // обрабатывает запросы к каталогу wwwroot/html

@@ -71,14 +71,14 @@ namespace СoffeShop.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        [Route("FileUpload")]
+        [Route("Upload")]
         public async Task<IActionResult> FileUpload(IFormFile file)
         {
             await UploadFile(file);
             TempData["msg"] = "File uploaded successfully";
             return View("FileUploadPage");
         }
-        [Route("FileUpload")]
+        [Route("Upload")]
         public IActionResult FileUpload()
         {
             return View("FileUploadPage");
@@ -118,8 +118,6 @@ namespace СoffeShop.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential=true });
 
             return LocalRedirect(returnUrl);
-
-
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

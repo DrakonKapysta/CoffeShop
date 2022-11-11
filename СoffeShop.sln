@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "СoffeShop", "СoffeShop\СoffeShop.csproj", "{CA75ACD3-8D4B-4547-B889-681A21CF96C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeShopServices", "CoffeShopServices\CoffeShopServices.csproj", "{469487D3-FA3F-445B-8F34-A1B24F2F846C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeShopServices", "CoffeShopServices\CoffeShopServices.csproj", "{469487D3-FA3F-445B-8F34-A1B24F2F846C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
